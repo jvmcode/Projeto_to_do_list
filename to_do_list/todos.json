@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "text": "Marcar reunião com acionistas",
+    "category": "Trabalho",
+    "isCompleted": false
+  },
+  {
+    "id": 2,
+    "text": "Fazer exames de rotina",
+    "category": "Pessoal",
+    "isCompleted": false
+  },
+  {
+    "id": 3,
+    "text": "Estudar React",
+    "category": "Estudos",
+    "isCompleted": false
+  },
+  {
+    "id": 1768589304086,
+    "text": "adasda",
+    "category": "Pessoal",
+    "isCompleted": true
+  },
+  {
+    "id": 1768589308698,
+    "text": "caascas",
+    "category": "Pessoal",
+    "isCompleted": false
+  },
+  {
+    "id": 1768589313883,
+    "text": "ggdsfgsdg",
+    "category": "Trabalho",
+    "isCompleted": false
+  }
+]
