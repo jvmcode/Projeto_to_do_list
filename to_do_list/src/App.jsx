@@ -15,26 +15,26 @@ function App() {
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("Asc");
 
-  // Carregar tarefas do backend
+  
   useEffect(() => {
     fetchTodos()
       .then(data => setTodos(data))
       .catch(err => console.error("Erro ao carregar tarefas:", err));
   }, []);
 
-  // Adicionar tarefa
+  
   const addTodo = async (text, category) => {
     const newTodo = await addTodoApi(text, category);
     setTodos([...todos, newTodo]);
   };
 
-  // Remover tarefa
+  
   const removeTodo = async (id) => {
     await removeTodoApi(id);
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  // Completar tarefa
+  
   const completeTodo = async (id) => {
     const todo = todos.find(t => t.id === id);
     const updated = await completeTodoApi(todo);

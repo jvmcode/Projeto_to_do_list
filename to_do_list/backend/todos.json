@@ -16,17 +16,5 @@
     "text": "Estudar React",
     "category": "Estudos",
     "isCompleted": false
-  },
-  {
-    "id": 1768673901651,
-    "text": "adasd",
-    "category": "Trabalho",
-    "isCompleted": false
-  },
-  {
-    "id": 1768673909994,
-    "text": "fafafafaf",
-    "category": "Pessoal",
-    "isCompleted": false
-  }
+  }  
 ]
