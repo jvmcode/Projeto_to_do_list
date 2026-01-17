@@ -24,37 +24,25 @@ function App() {
 
   // Adicionar tarefa
   const addTodo = async (text, category) => {
-    try {
-      const newTodo = await addTodoApi(text, category);
-      setTodos([...todos, newTodo]);
-    } catch (err) {
-      console.error("Erro ao adicionar tarefa:", err);
-    }
+    const newTodo = await addTodoApi(text, category);
+    setTodos([...todos, newTodo]);
   };
 
   // Remover tarefa
   const removeTodo = async (id) => {
-    try {
-      await removeTodoApi(id);
-      setTodos(todos.filter(todo => todo.id !== id));
-    } catch (err) {
-      console.error("Erro ao remover tarefa:", err);
-    }
+    await removeTodoApi(id);
+    setTodos(todos.filter(todo => todo.id !== id));
   };
 
   // Completar tarefa
   const completeTodo = async (id) => {
-    try {
-      const todo = todos.find(t => t.id === id);
-      await completeTodoApi(todo);
-      setTodos(
-        todos.map(t =>
-          t.id === id ? { ...t, isCompleted: !t.isCompleted } : t
-        )
-      );
-    } catch (err) {
-      console.error("Erro ao completar tarefa:", err);
-    }
+    const todo = todos.find(t => t.id === id);
+    const updated = await completeTodoApi(todo);
+    setTodos(
+      todos.map(t =>
+        t.id === id ? updated : t
+      )
+    );
   };
 
   return (
