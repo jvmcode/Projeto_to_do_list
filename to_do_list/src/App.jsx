@@ -5,6 +5,8 @@ import TodoForm from './components/TodoForm';
 import Search from './components/Search';
 import Filter from './components/Filter';
 
+import { fetchTodos, addTodoApi, removeTodoApi, completeTodoApi } from './controllers/todoController';
+
 import './App.css';
 
 function App() {
@@ -13,45 +15,46 @@ function App() {
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("Asc");
 
-  // (a) Carregar tarefas do backend ao montar
+  // Carregar tarefas do backend
   useEffect(() => {
-    fetch("http://localhost:3001/todos")
-      .then(res => res.json())
-      .then(data => setTodos(data));
+    fetchTodos()
+      .then(data => setTodos(data))
+      .catch(err => console.error("Erro ao carregar tarefas:", err));
   }, []);
 
-  // (b) Adicionar tarefa
-  const addTodo = (text, category) => {
-    fetch("http://localhost:3001/todos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, category })
-    })
-      .then(res => res.json())
-      .then(newTodo => setTodos([...todos, newTodo]));
+  // Adicionar tarefa
+  const addTodo = async (text, category) => {
+    try {
+      const newTodo = await addTodoApi(text, category);
+      setTodos([...todos, newTodo]);
+    } catch (err) {
+      console.error("Erro ao adicionar tarefa:", err);
+    }
   };
 
-  // (c) Remover tarefa
-  const removeTodo = (id) => {
-    fetch(`http://localhost:3001/todos/${id}`, { method: "DELETE" })
-      .then(() => setTodos(todos.filter(todo => todo.id !== id)));
+  // Remover tarefa
+  const removeTodo = async (id) => {
+    try {
+      await removeTodoApi(id);
+      setTodos(todos.filter(todo => todo.id !== id));
+    } catch (err) {
+      console.error("Erro ao remover tarefa:", err);
+    }
   };
 
-  // (d) Completar tarefa
-  const completeTodo = (id) => {
-    const todo = todos.find(t => t.id === id);
-    fetch(`http://localhost:3001/todos/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...todo, isCompleted: !todo.isCompleted })
-    })
-      .then(() =>
-        setTodos(
-          todos.map(t =>
-            t.id === id ? { ...t, isCompleted: !t.isCompleted } : t
-          )
+  // Completar tarefa
+  const completeTodo = async (id) => {
+    try {
+      const todo = todos.find(t => t.id === id);
+      await completeTodoApi(todo);
+      setTodos(
+        todos.map(t =>
+          t.id === id ? { ...t, isCompleted: !t.isCompleted } : t
         )
       );
+    } catch (err) {
+      console.error("Erro ao completar tarefa:", err);
+    }
   };
 
   return (
