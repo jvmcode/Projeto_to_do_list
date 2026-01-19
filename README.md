@@ -2,15 +2,19 @@
 
 ## Modulo 2/3/4
 
-Fluxo MVC entre Frontend e Backend
-1. Frontend (React) <br>
-    • View → Componentes (Todo, TodoForm, Search, Filter) exibem dados e recebem interação do usuário.<br>
-    • Controller → todoController.js chama a API e manipula os dados.<br>
-    • Model → todoModel.js define a estrutura de um Todo (id, text, category, isCompleted).<br>
-2. Backend (Express)<br>
-    • Router → todoRoutes.js define os endpoints (/todos, /todos/:id).<br>
-    • Controller → todoController.js recebe requisições e aplica regras de negócio.<br>
-    • Model → todoModel.js lê/escreve no todos.json.<br>
-    • Database → todos.json guarda os dados.
+Fluxo da Aplicação
+Usuário acessa o frontend (http://localhost:5173) e interage com a lista de tarefas.
+
+Frontend (React + Vite) envia requisições (GET, POST, PUT, DELETE) para /todos.
+
+O proxy do Vite redireciona essas chamadas para o Backend (http://localhost:3001).
+
+Backend (Express) recebe a requisição e usa o Prisma Client para acessar o banco.
+
+Banco de dados (SQLite) armazena e retorna os dados das tarefas.
+
+O Backend responde em formato JSON.
+
+O Frontend atualiza a interface com os dados recebidos.
 
 
