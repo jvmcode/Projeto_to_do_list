@@ -1,13 +1,11 @@
-import fs from "fs";
-import path from "path";
+import pkg from "@prisma/client";
+const { PrismaClient } = pkg;
 
-const FILE_PATH = path.resolve("todos.json");
+const prisma = new PrismaClient(); // ✅ funciona no Prisma 5
 
-export const readTodos = () => {
-  const data = fs.readFileSync(FILE_PATH);
-  return JSON.parse(data);
-};
-
-export const writeTodos = (todos) => {
-  fs.writeFileSync(FILE_PATH, JSON.stringify(todos, null, 2));
-};
+export const readTodos = async () => prisma.todo.findMany();
+export const writeTodo = async (todo) => prisma.todo.create({ data: todo });
+export const updateTodo = async (id, data) =>
+  prisma.todo.update({ where: { id: Number(id) }, data });
+export const deleteTodo = async (id) =>
+  prisma.todo.delete({ where: { id: Number(id) } });

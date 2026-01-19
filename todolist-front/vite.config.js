@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/todos": "http://localhost:3001"
-    }
-  }
+      "/todos": "http://localhost:3001",
+    },
+  },
 });

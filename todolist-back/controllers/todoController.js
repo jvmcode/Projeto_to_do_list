@@ -1,35 +1,25 @@
-import { readTodos, writeTodos } from "../models/todoModel.js";
+import { readTodos, writeTodo, updateTodo, deleteTodo } from "../models/todoModel.js";
 
-export const getTodos = (req, res) => {
-  res.json(readTodos());
+export const getTodos = async (req, res) => {
+  const todos = await readTodos();
+  res.json(todos);
 };
 
-export const addTodo = (req, res) => {
-  const todos = readTodos();
+export const addTodo = async (req, res) => {
   const { text, category } = req.body;
-  const newTodo = { id: Date.now(), text, category, isCompleted: false };
-  todos.push(newTodo);
-  writeTodos(todos);
+  const newTodo = await writeTodo({ text, category });
   res.status(201).json(newTodo);
 };
 
-export const updateTodo = (req, res) => {
-  const todos = readTodos();
+export const updateTodoController = async (req, res) => {
   const { id } = req.params;
   const { text, category, isCompleted } = req.body;
-
-  const updatedTodos = todos.map(todo =>
-    todo.id == id ? { ...todo, text, category, isCompleted } : todo
-  );
-
-  writeTodos(updatedTodos);
-  res.json({ message: "Tarefa atualizada!" });
+  const updated = await updateTodo(id, { text, category, isCompleted });
+  res.json(updated);
 };
 
-export const deleteTodo = (req, res) => {
-  const todos = readTodos();
+export const deleteTodoController = async (req, res) => {
   const { id } = req.params;
-  const filteredTodos = todos.filter(todo => todo.id != id);
-  writeTodos(filteredTodos);
+  await deleteTodo(id);
   res.json({ message: "Tarefa removida!" });
 };
